@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Внести запись</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function selectType(type) {
+            document.getElementById('expenseBtn').classList.remove('selected');
+            document.getElementById('incomeBtn').classList.remove('selected');
+            document.getElementById('type').value = type;
+
+            if (type === 'Доход') {
+                document.getElementById('categoryField').innerHTML = '<input type="text" id="category" name="category">';
+                document.getElementById('incomeBtn').classList.add('selected');
+            } else {
+                document.getElementById('categoryField').innerHTML = '<select id="category" name="category">{% for category in categories %}<option value="{{ category }}">{{ category }}</option>{% endfor %}</select>';
+                document.getElementById('expenseBtn').classList.add('selected');
+            }
+        }
+
+        function showResultMessage(operation) {
+            document.getElementById('result-message').innerHTML = 'Зарегистрирована операция: ' + operation;
+            document.getElementById('result-message').style.display = 'block';
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 3000);
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            fetch('/form', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                showResultMessage(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Произошла ошибка при отправке данных.');
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <form id="transactionForm" onsubmit="submitForm(event)">
+            <label for="date">Дата:</label>
+            <input type="date" id="date" name="date" value="{{ datetime.date.today() }}">
+
+            <label for="type">Тип записи:</label>
+            <div>
+                <button type="button" id="expenseBtn" onclick="selectType('Расход')">Расход</button>
+                <button type="button" id="incomeBtn" onclick="selectType('Доход')">Доход</button>
+                <input type="hidden" id="type" name="type" value="">
+            </div>
+
+            <label for="category">Категория:</label>
+            <div id="categoryField">
+                <select id="category" name="category">
+                    {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <label for="amount">Сумма:</label>
+            <input type="number" id="amount" name="amount" step="0.01">
+
+            <button type="submit">ОК</button>
+        </form>
+    </div>
+
+    <div id="result-message"></div>
+</body>
+</html>
