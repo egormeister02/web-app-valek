@@ -1,0 +1,733 @@
+[2024-08-30 00:50:00 +0000] [96812] [INFO] Starting gunicorn 23.0.0
+[2024-08-30 00:50:00 +0000] [96812] [INFO] Listening at: http://0.0.0.0:8000 (96812)
+[2024-08-30 00:50:00 +0000] [96812] [INFO] Using worker: sync
+[2024-08-30 00:50:00 +0000] [96813] [INFO] Booting worker with pid: 96813
+[2024-08-30 00:50:24 +0000] [96812] [INFO] Handling signal: hup
+[2024-08-30 00:50:24 +0000] [96812] [INFO] Hang up: Master
+[2024-08-30 00:50:24 +0000] [96812] [ERROR] Worker (pid:96813) was sent SIGHUP!
+[2024-08-30 00:50:24 +0000] [96815] [INFO] Booting worker with pid: 96815
+[2024-08-30 03:31:51 +0000] [96815] [WARNING] Invalid request from ip=206.168.34.198: Invalid HTTP Version: (2, 0)
+[2024-08-30 04:07:50 +0000] [96815] [WARNING] Invalid request from ip=206.168.34.59: Invalid HTTP Version: (2, 0)
+[2024-08-30 08:28:50 +0000] [96812] [CRITICAL] WORKER TIMEOUT (pid:96815)
+[2024-08-30 08:28:50 +0000] [96815] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+          ^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+           ^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+        ^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2024-08-30 08:28:50 +0000] [96815] [INFO] Worker exiting (pid: 96815)
+[2024-08-30 08:28:51 +0000] [99553] [INFO] Booting worker with pid: 99553
+[2024-08-30 12:39:45 +0000] [99553] [WARNING] Invalid request from ip=162.142.125.208: Invalid HTTP Version: (2, 0)
+[2024-08-30 13:33:59 +0000] [99553] [INFO] Parent changed, shutting down: <Worker 99553>
+[2024-08-30 13:33:59 +0000] [99553] [INFO] Worker exiting (pid: 99553)
+[2024-08-30 13:35:27 +0000] [100136] [INFO] Starting gunicorn 23.0.0
+[2024-08-30 13:35:27 +0000] [100136] [INFO] Listening at: http://0.0.0.0:8000 (100136)
+[2024-08-30 13:35:27 +0000] [100136] [INFO] Using worker: sync
+[2024-08-30 13:35:27 +0000] [100137] [INFO] Booting worker with pid: 100137
+[2024-08-30 17:37:50 +0000] [100136] [INFO] Handling signal: hup
+[2024-08-30 17:37:50 +0000] [100136] [INFO] Hang up: Master
+[2024-08-30 17:37:50 +0000] [100136] [ERROR] Worker (pid:100137) was sent SIGHUP!
+[2024-08-30 17:37:50 +0000] [100715] [INFO] Booting worker with pid: 100715
+[2024-08-30 19:39:04 +0000] [100715] [WARNING] Invalid request from ip=162.142.125.209: Invalid HTTP Version: (2, 0)
+[2024-09-01 10:09:18 +0000] [100715] [WARNING] Invalid request from ip=167.94.138.45: Invalid HTTP Version: (2, 0)
+[2024-09-01 22:10:32 +0000] [100715] [WARNING] Invalid request from ip=167.94.146.56: Invalid HTTP Version: (2, 0)
+[2024-09-02 01:31:30 +0000] [100715] [WARNING] Invalid request from ip=167.94.145.109: Invalid HTTP Version: (2, 0)
+[2024-09-02 04:25:40 +0000] [100715] [WARNING] Invalid request from ip=172.233.58.223: Invalid HTTP request line: ''
+[2024-09-02 04:25:46 +0000] [100715] [WARNING] Invalid request from ip=172.233.58.223: Invalid HTTP method: '\x05\x04\x00\x01\x02\x80\x05\x01\x00\x03\ngoogle.com\x00PGET'
+[2024-09-02 04:25:51 +0000] [100715] [WARNING] Invalid request from ip=172.233.58.223: Invalid HTTP Version: 'RTSP/1.0'
+[2024-09-02 04:26:01 +0000] [100715] [WARNING] Invalid request from ip=172.233.58.223: Invalid HTTP request line: 'HELP'
+[2024-09-02 04:26:22 +0000] [100715] [WARNING] Invalid request from ip=172.233.58.223: Invalid HTTP Version: 'SIP/2.0'
+[2024-09-02 20:39:44 +0000] [100715] [INFO] Parent changed, shutting down: <Worker 100715>
+[2024-09-02 20:39:44 +0000] [100715] [INFO] Worker exiting (pid: 100715)
+[2024-09-02 20:51:23 +0000] [115109] [INFO] Starting gunicorn 23.0.0
+[2024-09-02 20:51:23 +0000] [115109] [INFO] Listening at: http://0.0.0.0:8000 (115109)
+[2024-09-02 20:51:23 +0000] [115109] [INFO] Using worker: sync
+[2024-09-02 20:51:23 +0000] [115110] [INFO] Booting worker with pid: 115110
+[2024-09-02 20:51:24 +0000] [115111] [INFO] Booting worker with pid: 115111
+[2024-09-02 20:51:24 +0000] [115112] [INFO] Booting worker with pid: 115112
+[2024-09-02 20:51:24 +0000] [115113] [INFO] Booting worker with pid: 115113
+[2024-09-02 20:54:41 +0000] [115113] [ERROR] Error handling request /form
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valek/app.py", line 63, in form
+    send_telegram_message(chat_id, operation)
+  File "/home/egor/valek/app.py", line 22, in send_telegram_message
+    url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'TELEGRAM_BOT_TOKEN'
+[2024-09-02 20:55:12 +0000] [115110] [ERROR] Error handling request /form
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valek/app.py", line 63, in form
+    send_telegram_message(chat_id, operation)
+  File "/home/egor/valek/app.py", line 22, in send_telegram_message
+    url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'TELEGRAM_BOT_TOKEN'
+[2024-09-02 20:56:32 +0000] [115110] [ERROR] Error handling request /form
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valek/app.py", line 63, in form
+    send_telegram_message(chat_id, operation)
+  File "/home/egor/valek/app.py", line 22, in send_telegram_message
+    url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'TELEGRAM_BOT_TOKEN'
+[2024-09-02 20:56:37 +0000] [115112] [ERROR] Error handling request /form
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valek/app.py", line 63, in form
+    send_telegram_message(chat_id, operation)
+  File "/home/egor/valek/app.py", line 22, in send_telegram_message
+    url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'TELEGRAM_BOT_TOKEN'
+[2024-09-02 21:05:03 +0000] [115111] [ERROR] Error handling request /form
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valek/app.py", line 63, in form
+    send_telegram_message(chat_id, operation)
+  File "/home/egor/valek/app.py", line 22, in send_telegram_message
+    url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'TELEGRAM_BOT_TOKEN'
+[2024-09-02 21:08:06 +0000] [115112] [ERROR] Error handling request /form
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valek/app.py", line 63, in form
+    send_telegram_message(chat_id, operation)
+  File "/home/egor/valek/app.py", line 22, in send_telegram_message
+    url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'TELEGRAM_BOT_TOKEN'
+[2024-09-02 21:21:49 +0000] [115109] [ERROR] Worker (pid:115112) was sent SIGKILL! Perhaps out of memory?
+[2024-09-02 21:21:49 +0000] [115164] [INFO] Booting worker with pid: 115164
+[2024-09-02 21:21:58 +0000] [115110] [INFO] Parent changed, shutting down: <Worker 115110>
+[2024-09-02 21:21:58 +0000] [115110] [INFO] Worker exiting (pid: 115110)
+[2024-09-02 21:22:08 +0000] [115164] [INFO] Parent changed, shutting down: <Worker 115164>
+[2024-09-02 21:22:08 +0000] [115164] [INFO] Worker exiting (pid: 115164)
+[2024-09-02 21:22:10 +0000] [115113] [INFO] Parent changed, shutting down: <Worker 115113>
+[2024-09-02 21:22:10 +0000] [115113] [INFO] Worker exiting (pid: 115113)
+[2024-09-02 21:23:14 +0000] [115169] [INFO] Starting gunicorn 23.0.0
+[2024-09-02 21:23:14 +0000] [115169] [INFO] Listening at: http://0.0.0.0:8000 (115169)
+[2024-09-02 21:23:14 +0000] [115169] [INFO] Using worker: sync
+[2024-09-02 21:23:14 +0000] [115170] [INFO] Booting worker with pid: 115170
+[2024-09-02 21:23:14 +0000] [115171] [INFO] Booting worker with pid: 115171
+[2024-09-02 21:23:15 +0000] [115169] [INFO] Handling signal: int
+[2024-09-02 21:23:16 +0000] [115171] [INFO] Worker exiting (pid: 115171)
+[2024-09-02 21:23:16 +0000] [115170] [INFO] Worker exiting (pid: 115170)
+[2024-09-02 21:23:26 +0000] [115172] [INFO] Starting gunicorn 23.0.0
+[2024-09-02 21:23:26 +0000] [115172] [INFO] Listening at: http://0.0.0.0:8000 (115172)
+[2024-09-02 21:23:26 +0000] [115172] [INFO] Using worker: sync
+[2024-09-02 21:23:26 +0000] [115173] [INFO] Booting worker with pid: 115173
+[2024-09-02 21:23:27 +0000] [115174] [INFO] Booting worker with pid: 115174
+Traceback (most recent call last):
+  File "/home/egor/valek/bot.py", line 19, in <module>
+    application = Application.builder().token("7208144254:AAFlfsPMukGH5OX0NX0yzJph6Qk0JGGA-Ns").build()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/telegram/ext/_applicationbuilder.py", line 310, in build
+    bot: Bot = self._build_ext_bot()  # build a bot
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/telegram/ext/_applicationbuilder.py", line 280, in _build_ext_bot
+    request=self._build_request(get_updates=False),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/telegram/ext/_applicationbuilder.py", line 260, in _build_request
+    return HTTPXRequest(
+           ^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/telegram/request/_httpxrequest.py", line 189, in __init__
+    self._client = self._build_client()
+                   ^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/telegram/request/_httpxrequest.py", line 224, in _build_client
+    return httpx.AsyncClient(**self._client_kwargs)  # type: ignore[arg-type]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/httpx/_client.py", line 1442, in __init__
+    self._transport = self._init_transport(
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/httpx/_client.py", line 1490, in _init_transport
+    return AsyncHTTPTransport(
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/httpx/_transports/default.py", line 280, in __init__
+    ssl_context = create_ssl_context(verify=verify, cert=cert, trust_env=trust_env)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/httpx/_config.py", line 55, in create_ssl_context
+    return SSLConfig(
+           ^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/httpx/_config.py", line 79, in __init__
+    self.ssl_context = self.load_ssl_context()
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/httpx/_config.py", line 91, in load_ssl_context
+    return self.load_ssl_context_verify()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/httpx/_config.py", line 149, in load_ssl_context_verify
+    context.load_verify_locations(cafile=cafile)
+KeyboardInterrupt
+[2024-09-02 21:24:43 +0000] [115174] [ERROR] Error handling request /form
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valek/app.py", line 63, in form
+    send_telegram_message(chat_id, operation)
+  File "/home/egor/valek/app.py", line 22, in send_telegram_message
+    url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'TELEGRAM_BOT_TOKEN'
+[2024-09-02 21:25:01 +0000] [115172] [ERROR] Worker (pid:115174) was sent SIGFPE!
+[2024-09-02 21:25:01 +0000] [115179] [INFO] Booting worker with pid: 115179
+[2024-09-02 21:25:22 +0000] [115172] [ERROR] Worker (pid:115179) was sent SIGKILL! Perhaps out of memory?
+[2024-09-02 21:25:22 +0000] [115181] [INFO] Booting worker with pid: 115181
+[2024-09-02 21:25:50 +0000] [115172] [ERROR] Worker (pid:115181) was sent SIGKILL! Perhaps out of memory?
+[2024-09-02 21:25:50 +0000] [115183] [INFO] Booting worker with pid: 115183
+[2024-09-02 21:25:57 +0000] [115172] [ERROR] Worker (pid:115173) was sent SIGKILL! Perhaps out of memory?
+[2024-09-02 21:25:57 +0000] [115184] [INFO] Booting worker with pid: 115184
+[2024-09-02 21:26:09 +0000] [115183] [INFO] Parent changed, shutting down: <Worker 115183>
+[2024-09-02 21:26:09 +0000] [115183] [INFO] Worker exiting (pid: 115183)
+[2024-09-02 21:26:16 +0000] [115184] [INFO] Parent changed, shutting down: <Worker 115184>
+[2024-09-02 21:26:16 +0000] [115184] [INFO] Worker exiting (pid: 115184)
+[2024-09-02 21:27:25 +0000] [115188] [INFO] Starting gunicorn 23.0.0
+[2024-09-02 21:27:25 +0000] [115188] [INFO] Listening at: http://0.0.0.0:8000 (115188)
+[2024-09-02 21:27:25 +0000] [115188] [INFO] Using worker: sync
+[2024-09-02 21:27:25 +0000] [115189] [INFO] Booting worker with pid: 115189
+[2024-09-02 21:27:25 +0000] [115190] [INFO] Booting worker with pid: 115190
+[2024-09-02 21:29:20 +0000] [115190] [ERROR] Error handling request /form
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valek/app.py", line 63, in form
+    send_telegram_message(chat_id, operation)
+  File "/home/egor/valek/app.py", line 22, in send_telegram_message
+    url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'TELEGRAM_BOT_TOKEN'
+[2024-09-02 21:29:26 +0000] [115190] [ERROR] Error handling request /form
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valek/app.py", line 63, in form
+    send_telegram_message(chat_id, operation)
+  File "/home/egor/valek/app.py", line 22, in send_telegram_message
+    url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'TELEGRAM_BOT_TOKEN'
+[2024-09-02 21:31:24 +0000] [115190] [ERROR] Error handling request /form
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valek/app.py", line 63, in form
+    send_telegram_message(chat_id, operation)
+  File "/home/egor/valek/app.py", line 22, in send_telegram_message
+    url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'TELEGRAM_BOT_TOKEN'
+[2024-09-02 21:33:09 +0000] [115190] [INFO] Parent changed, shutting down: <Worker 115190>
+[2024-09-02 21:33:09 +0000] [115190] [INFO] Worker exiting (pid: 115190)
+[2024-09-02 21:33:15 +0000] [115189] [INFO] Parent changed, shutting down: <Worker 115189>
+[2024-09-02 21:33:15 +0000] [115189] [INFO] Worker exiting (pid: 115189)
+[2024-09-02 21:33:42 +0000] [115209] [INFO] Starting gunicorn 23.0.0
+[2024-09-02 21:33:42 +0000] [115209] [INFO] Listening at: http://0.0.0.0:8000 (115209)
+[2024-09-02 21:33:42 +0000] [115209] [INFO] Using worker: sync
+[2024-09-02 21:33:42 +0000] [115210] [INFO] Booting worker with pid: 115210
+[2024-09-02 21:33:42 +0000] [115211] [INFO] Booting worker with pid: 115211
+[2024-09-02 21:33:52 +0000] [115211] [ERROR] Error handling request /form?chat_id=1043270764
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valek/app.py", line 56, in form
+    send_telegram_message(chat_id, chat_id)
+  File "/home/egor/valek/app.py", line 22, in send_telegram_message
+    url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'TELEGRAM_BOT_TOKEN'
+[2024-09-02 21:34:03 +0000] [115210] [ERROR] Error handling request /form?chat_id=1043270764
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valek/app.py", line 56, in form
+    send_telegram_message(chat_id, chat_id)
+  File "/home/egor/valek/app.py", line 22, in send_telegram_message
+    url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'TELEGRAM_BOT_TOKEN'
+[2024-09-02 21:34:09 +0000] [115210] [ERROR] Error handling request /form?chat_id=1043270764
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valek/app.py", line 56, in form
+    send_telegram_message(chat_id, chat_id)
+  File "/home/egor/valek/app.py", line 22, in send_telegram_message
+    url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'TELEGRAM_BOT_TOKEN'
+[2024-09-02 21:34:15 +0000] [115210] [ERROR] Error handling request /form?chat_id=1043270764
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valek/app.py", line 56, in form
+    send_telegram_message(chat_id, chat_id)
+  File "/home/egor/valek/app.py", line 22, in send_telegram_message
+    url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'TELEGRAM_BOT_TOKEN'
+[2024-09-02 21:34:27 +0000] [115211] [ERROR] Error handling request /form
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valek/app.py", line 56, in form
+    send_telegram_message(chat_id, chat_id)
+  File "/home/egor/valek/app.py", line 22, in send_telegram_message
+    url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'TELEGRAM_BOT_TOKEN'
+[2024-09-02 21:38:40 +0000] [115210] [INFO] Parent changed, shutting down: <Worker 115210>
+[2024-09-02 21:38:40 +0000] [115210] [INFO] Worker exiting (pid: 115210)
+[2024-09-02 21:38:42 +0000] [115211] [INFO] Parent changed, shutting down: <Worker 115211>
+[2024-09-02 21:38:42 +0000] [115211] [INFO] Worker exiting (pid: 115211)
+[2024-09-02 21:39:16 +0000] [115224] [INFO] Starting gunicorn 23.0.0
+[2024-09-02 21:39:16 +0000] [115224] [INFO] Listening at: http://0.0.0.0:8000 (115224)
+[2024-09-02 21:39:16 +0000] [115224] [INFO] Using worker: sync
+[2024-09-02 21:39:16 +0000] [115225] [INFO] Booting worker with pid: 115225
+[2024-09-02 21:39:16 +0000] [115226] [INFO] Booting worker with pid: 115226
+[2024-09-02 21:39:40 +0000] [115226] [ERROR] Error handling request /form?chat_id=1043270764
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valek/app.py", line 56, in form
+    send_telegram_message(chat_id, 'text')
+  File "/home/egor/valek/app.py", line 22, in send_telegram_message
+    url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'TELEGRAM_BOT_TOKEN'
+[2024-09-02 21:40:00 +0000] [115225] [ERROR] Error handling request /form?chat_id=1043270764
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1498, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1476, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valek/app.py", line 56, in form
+    send_telegram_message(chat_id, 'text')
+  File "/home/egor/valek/app.py", line 22, in send_telegram_message
+    url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
+                                         ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'TELEGRAM_BOT_TOKEN'
+Error while getting Updates: Bad Gateway
+No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/telegram/ext/_updater.py", line 755, in _network_loop_retry
+    if not await do_action():
+           ^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/telegram/ext/_updater.py", line 749, in do_action
+    return action_cb_task.result()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/telegram/ext/_updater.py", line 389, in polling_action_cb
+    raise exc
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/telegram/ext/_updater.py", line 378, in polling_action_cb
+    updates = await self.bot.get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/telegram/ext/_extbot.py", line 649, in get_updates
+    updates = await super().get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/telegram/_bot.py", line 4364, in get_updates
+    await self._post(
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/telegram/_bot.py", line 622, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/telegram/ext/_extbot.py", line 355, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/telegram/_bot.py", line 651, in _do_post
+    result = await request.post(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/telegram/request/_baserequest.py", line 200, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/egor/valekvenv/lib/python3.12/site-packages/telegram/request/_baserequest.py", line 385, in _request_wrapper
+    raise NetworkError(description or "Bad Gateway")
+telegram.error.NetworkError: Bad Gateway
+[2024-09-03 01:55:28 +0000] [115224] [INFO] Handling signal: hup
+[2024-09-03 01:55:28 +0000] [115224] [INFO] Hang up: Master
+[2024-09-03 01:55:28 +0000] [115224] [ERROR] Worker (pid:115225) was sent SIGHUP!
+[2024-09-03 01:55:28 +0000] [115224] [ERROR] Worker (pid:115226) was sent SIGHUP!
+[2024-09-03 01:55:28 +0000] [116648] [INFO] Booting worker with pid: 116648
+[2024-09-03 01:55:28 +0000] [116649] [INFO] Booting worker with pid: 116649
+[2024-09-03 08:03:10 +0000] [116649] [WARNING] Invalid request from ip=199.45.154.127: Invalid HTTP Version: (2, 0)
