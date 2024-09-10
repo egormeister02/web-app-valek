@@ -26,7 +26,6 @@ def send_telegram_message(chat_id, text):
     }
     requests.post(url, json=payload)
 
-
 def get_categories():
     sheet = get_google_sheets_service()
     result = sheet.values().get(spreadsheetId=app.config['GOOGLE_SHEET_ID'],
@@ -35,37 +34,34 @@ def get_categories():
     return [item[0] for item in categories if item]
 
 def add_transaction(date, category, type, amount):
-    sheet = get_google_sheets_service()
     date_obj = datetime.datetime.strptime(date, '%Y-%m-%d')
     formatted_date = date_obj.strftime('%d.%m.%Y')
     values = [[formatted_date, category, type, amount]]
     body = {'values': values}
-    sheet.values().append(spreadsheetId=app.config['GOOGLE_SHEET_ID'],
-                          range='Траты!D:G',
-                          valueInputOption='USER_ENTERED',
-                          body=body).execute()
     return f"\n{formatted_date} \n{category} \n{type} \n{amount}"
-
-@app.route('/')
-def index():
-    return render_template('index.html')
 
 @app.route('/form', methods=['GET', 'POST'])
 def form():
-    chat_id = request.args.get('chat_id')
-    send_telegram_message(chat_id, 'text')
     if request.method == 'POST':
+        # Получаем chat_id из тела POST-запроса
+        chat_id = request.form.get('chat_id')
         date = request.form.get('date')
         category = request.form.get('category')
         type = request.form.get('type')
         amount = request.form.get('amount')
-        operation = add_transaction(date, category, type, amount)
 
+        # Добавляем транзакцию
+        operation = add_transaction(date, category, type, amount)
+        
+        # Отправляем результат в Telegram
         send_telegram_message(chat_id, operation)
+        
         return jsonify(message=operation)
+    
+    # Загружаем категории и передаем chat_id
+    chat_id = request.args.get('chat_id')
     categories = get_categories()
-    return render_template('form.html', categories=categories, datetime=datetime)
+    return render_template('form.html', categories=categories, chat_id=chat_id, datetime=datetime)
 
 if __name__ == '__main__':
     app.run()
-

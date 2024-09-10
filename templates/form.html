@@ -20,11 +20,13 @@
             }
         }
 
-        function showResultMessage(operation) {
+        function showResultMessage(operation, chat_id) {
             document.getElementById('result-message').innerHTML = 'Зарегистрирована операция: ' + operation;
             document.getElementById('result-message').style.display = 'block';
+
+            // Перенаправляем на /form с chat_id
             setTimeout(() => {
-                window.location.href = '/';
+                window.location.href = `/form?chat_id=${chat_id}`;
             }, 3000);
         }
 
@@ -32,13 +34,16 @@
             event.preventDefault();
 
             const formData = new FormData(event.target);
+            const chatId = document.getElementById('chat_id').value;  // Получаем chat_id из скрытого поля
+
             fetch('/form', {
                 method: 'POST',
                 body: formData
             })
             .then(response => response.json())
             .then(data => {
-                showResultMessage(data.message);
+                // Передаем chat_id в функцию для перенаправления
+                showResultMessage(data.message, chatId);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -50,6 +55,9 @@
 <body>
     <div class="container">
         <form id="transactionForm" onsubmit="submitForm(event)">
+            <!-- Скрытое поле для chat_id -->
+            <input type="hidden" id="chat_id" name="chat_id" value="{{ chat_id }}">
+
             <label for="date">Дата:</label>
             <input type="date" id="date" name="date" value="{{ datetime.date.today() }}">
 
