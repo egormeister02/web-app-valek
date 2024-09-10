@@ -8,12 +8,12 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     url = f"https://46.8.230.15.nip.io/form?chat_id={chat_id}"
     # Создаем кнопку для запуска мини-приложения в WebView
     keyboard = [
-        [InlineKeyboardButton("Open Mini App", web_app=WebAppInfo(url=url))]
+        [InlineKeyboardButton("Добавить запись", web_app=WebAppInfo(url=url))]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
     # Отправляем сообщение пользователю с кнопкой
-    await context.bot.send_message(chat_id, "Запуск мини-приложения", reply_markup=reply_markup)
+    await context.bot.send_message(chat_id, "Добро пожаловать!", reply_markup=reply_markup)
 
 # Создаем экземпляр приложения
 application = Application.builder().token("7208144254:AAFlfsPMukGH5OX0NX0yzJph6Qk0JGGA-Ns").build()
