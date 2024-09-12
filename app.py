@@ -18,6 +18,8 @@ def get_google_sheets_service():
     sheet = service.spreadsheets()
     return sheet
 
+import requests
+
 def send_telegram_message(chat_id, text):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     
@@ -29,8 +31,10 @@ def send_telegram_message(chat_id, text):
         "inline_keyboard": [
             [
                 {
-                    "text": "Добавить новую запись",
-                    "url": mini_app_url
+                    "text": "Открыть мини-приложение",
+                    "web_app": {
+                        "url": mini_app_url
+                    }
                 }
             ]
         ]
@@ -48,6 +52,7 @@ def send_telegram_message(chat_id, text):
     if response.status_code != 200:
         print(f"Failed to send message. Status code: {response.status_code}")
         print(f"Response: {response.text}")
+
 
 def get_categories():
     sheet = get_google_sheets_service()
