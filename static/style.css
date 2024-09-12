@@ -10,24 +10,19 @@ body {
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     background: #f7cb4d;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
     width: 100%; /* Устанавливаем ширину контейнера */
     max-width: 500px; /* Максимальная ширина контейнера */
-    box-sizing: border-box; /* Учитываем padding в ширину */
+    box-sizing: border-box; /* Учитываем padding в ширине */
 }
 
-form {
+.type-buttons {
     display: flex;
-    flex-direction: column;
-    width: 100%; /* Форму растягиваем на всю ширину контейнера */
-    box-sizing: border-box; /* Учитываем padding и border в ширину */
+    justify-content: center; /* Центрируем кнопки по горизонтали */
 }
 
 form {
