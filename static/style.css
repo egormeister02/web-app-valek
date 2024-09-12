@@ -55,6 +55,16 @@ input[type="date"], input, select, button {
     box-sizing: border-box; /* Учитываем padding и border */
 }
 
+input[type="date"] {
+    -webkit-appearance: none; /* Убираем нативный стиль iOS для поля даты */
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+
 
 button {
     background-color: #ffe599;
