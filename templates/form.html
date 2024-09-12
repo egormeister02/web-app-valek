@@ -12,7 +12,7 @@
             document.getElementById('type').value = type;
 
             const categoryField = document.getElementById('categoryField');
-
+            
             if (type === 'Доход') {
                 categoryField.innerHTML = '<input type="text" id="category" name="category" required>';
                 document.getElementById('incomeBtn').classList.add('selected');
@@ -21,7 +21,7 @@
                 document.getElementById('expenseBtn').classList.add('selected');
             }
 
-            // Убедимся, что элементы не изменяют свою ширину
+            // Убедимся, что ширина и высота полей не изменяются
             document.querySelectorAll('#categoryField input, #categoryField select').forEach(el => {
                 el.style.width = '100%';
                 el.style.boxSizing = 'border-box';

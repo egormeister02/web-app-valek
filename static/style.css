@@ -10,13 +10,11 @@ body {
 }
 
 .container {
-    width: 100%; 
-    max-width: 500px; 
-    margin: 0 auto; 
-    box-sizing: border-box; 
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
+    background: #f7cb4d;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 h1 {
@@ -35,7 +33,6 @@ h1 {
 form {
     display: flex;
     flex-direction: column;
-    width: 100%;
 }
 
 label {
@@ -50,14 +47,16 @@ input, select, button {
 }
 
 button {
-    flex: 1; 
-    min-width: 120px; 
-    height: 40px;
+    background-color: #ffe599;
+    color: #333;
+    transition: transform 0.3s;
+    width: 120px; /* Фиксированная ширина кнопок */
+    height: 40px; /* Фиксированная высота кнопок */
 }
 
 input, select {
-    min-width: 100%; 
-    height: 40px;
+    width: 100%; /* Поля ввода занимают всю ширину контейнера */
+    box-sizing: border-box; /* Учитываем padding в общей ширине */
 }
 
 button:active {
@@ -87,8 +86,8 @@ button:focus {
 }
 
 #categoryField {
-    width: 100%;
-    box-sizing: border-box;
+    width: 100%; /* Поле для категории занимает всю ширину контейнера */
+    box-sizing: border-box; /* Учитываем padding в общей ширине */
 }
 
 /* Адаптивные стили для экранов до 600px */
