@@ -15,20 +15,20 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 100%; /* Устанавливаем ширину контейнера */
-    max-width: 500px; /* Максимальная ширина контейнера */
-    box-sizing: border-box; /* Учитываем padding в ширине */
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
 }
 
 .type-buttons {
     display: flex;
-    justify-content: center; /* Центрируем кнопки по горизонтали */
+    justify-content: center;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    width: 100%; /* Форму растягиваем на всю ширину контейнера */
+    width: 100%;
 }
 
 label {
@@ -40,38 +40,24 @@ input, select, button {
     margin-bottom: 10px;
     border: 1px solid #cccccc;
     border-radius: 5px;
-    width: 100%; /* Поля ввода занимают всю ширину контейнера */
-    box-sizing: border-box; /* Учитываем padding в ширину */
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
 }
 
 input[type="date"], input[type="number"], select {
-    height: 40px; /* Устанавливаем высоту для полей ввода */
-    font-size: 16px; /* Устанавливаем размер шрифта */
-    padding: 10px; /* Устанавливаем padding */
-}
-
-input[type="date"], input, select, button {
-    width: 100%;
-    box-sizing: border-box; /* Учитываем padding и border */
+    height: 40px;
 }
 
 input[type="date"] {
-    -webkit-appearance: none; /* Убираем нативный стиль iOS для поля даты */
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #cccccc;
-    border-radius: 5px;
-    box-sizing: border-box;
+    -webkit-appearance: none;
 }
-
-
 
 button {
     background-color: #ffe599;
     color: #333;
     transition: transform 0.3s;
-    height: 40px; /* Фиксированная высота кнопок */
-    font-size: 16px; /* Устанавливаем размер шрифта для кнопок */
+    height: 40px;
 }
 
 button:active {
@@ -84,9 +70,9 @@ button.selected {
 }
 
 button.type-btn {
-    flex: 1; /* Кнопки занимают равные доли доступного пространства */
-    max-width: 50%; /* Ограничиваем максимальную ширину кнопок до половины контейнера */
-    margin: 0 5px; /* Устанавливаем небольшой отступ по горизонтали */
+    flex: 1;
+    max-width: 50%;
+    margin: 0 5px;
 }
 
 button:focus {
@@ -107,33 +93,25 @@ button:focus {
 }
 
 #categoryField {
-    width: 100%; /* Поле для категории занимает всю ширину контейнера */
-    box-sizing: border-box; /* Учитываем padding в общей ширине */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Адаптивные стили для экранов до 600px */
 @media (max-width: 600px) {
     html, body {
-        height: 100%; /* Устанавливаем высоту для body и html */
+        height: 100%;
         margin: 0;
-        padding: 0;
     }
 
     .container {
-        width: 100vw; /* 100% от ширины окна */
-        height: 100vh; /* 100% от высоты окна */
+        width: 100vw;
+        height: 100vh;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         padding: 20px;
-        box-sizing: border-box; /* Убедимся, что padding учитывается в общей ширине/высоте */
-    }
-
-    input, select, button {
-        width: 100%; /* Элементы формы занимают всю ширину контейнера */
-        box-sizing: border-box; /* Padding и margin не влияют на ширину */
-        font-size: 16px; /* Устанавливаем размер шрифта для всех элементов */
+        box-sizing: border-box;
     }
 }
-
