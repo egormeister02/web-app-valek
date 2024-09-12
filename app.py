@@ -31,7 +31,7 @@ def send_telegram_message(chat_id, text):
         "inline_keyboard": [
             [
                 {
-                    "text": "Открыть мини-приложение",
+                    "text": "Добавить запись",
                     "web_app": {
                         "url": mini_app_url
                     }
