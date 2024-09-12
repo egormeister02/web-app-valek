@@ -77,3 +77,29 @@ button:focus {
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+/* Адаптивные стили для экранов до 600px */
+@media (max-width: 600px) {
+    html, body {
+        height: 100%; /* Устанавливаем высоту для body и html */
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 100vw; /* 100% от ширины окна */
+        height: 100vh; /* 100% от высоты окна */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        box-sizing: border-box; /* Убедимся, что padding учитывается в общей ширине/высоте */
+    }
+
+    input, select, button {
+        width: 100%; /* Элементы формы занимают всю ширину контейнера */
+        box-sizing: border-box; /* Padding и margin не влияют на ширину */
+    }
+}
+

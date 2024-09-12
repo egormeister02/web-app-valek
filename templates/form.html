@@ -9,7 +9,7 @@
         function selectType(type) {
             document.getElementById('expenseBtn').classList.remove('selected');
             document.getElementById('incomeBtn').classList.remove('selected');
-            document.getElementById('type').value = type;
+            document.getElementById('type').value = 'Расход';
 
             if (type === 'Доход') {
                 document.getElementById('categoryField').innerHTML = '<input type="text" id="category" name="category">';
@@ -63,8 +63,9 @@
 
             <label for="type">Тип записи:</label>
             <div>
-                <button type="button" id="expenseBtn" onclick="selectType('Расход')">Расход</button>
-                <button type="button" id="incomeBtn" onclick="selectType('Доход')">Доход</button>
+                <button type="button" id="expenseBtn" onclick="selectType('Расход')" aria-pressed="false">Расход</button>
+                <button type="button" id="incomeBtn" onclick="selectType('Доход')" aria-pressed="false">Доход</button>
+
                 <input type="hidden" id="type" name="type" value="">
             </div>
 
