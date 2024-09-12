@@ -20,6 +20,11 @@ body {
     box-sizing: border-box; /* Учитываем padding в ширине */
 }
 
+.type-buttons {
+    display: flex;
+    justify-content: center; /* Центрируем кнопки по горизонтали */
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -53,6 +58,14 @@ button:active {
 button.selected {
     background-color: #cccccc;
     color: #ffffff;
+}
+
+button.type-btn {
+    flex: 1; /* Кнопки занимают равные доли доступного пространства */
+    max-width: 50%; /* Ограничиваем максимальную ширину кнопок до половины контейнера */
+    padding: 10px;
+    margin: 10px; /* Убираем отступы между кнопками */
+    box-sizing: border-box; /* Учитываем padding в ширине кнопок */
 }
 
 button:focus {

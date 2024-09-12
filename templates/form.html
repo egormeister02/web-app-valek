@@ -102,11 +102,11 @@
             <input type="date" id="date" name="date" required>
 
             <label for="type">Тип записи:</label>
-            <div>
-                <button type="button" id="expenseBtn" onclick="selectType('Расход')">Расход</button>
-                <button type="button" id="incomeBtn" onclick="selectType('Доход')">Доход</button>
-                <input type="hidden" id="type" name="type" value="Расход"> <!-- Значение по умолчанию -->
-            </div>
+                <div class="type-buttons">
+                    <button type="button" id="expenseBtn" class="type-btn" onclick="selectType('Расход')">Расход</button>
+                    <button type="button" id="incomeBtn" class="type-btn" onclick="selectType('Доход')">Доход</button>
+                    <input type="hidden" id="type" name="type" value="Расход"> <!-- Значение по умолчанию -->
+                </div>
 
             <label for="category">Категория:</label>
             <div id="categoryField">
