@@ -11,13 +11,21 @@
             document.getElementById('incomeBtn').classList.remove('selected');
             document.getElementById('type').value = type;
 
+            const categoryField = document.getElementById('categoryField');
+            
             if (type === 'Доход') {
-                document.getElementById('categoryField').innerHTML = '<input type="text" id="category" name="category" required>';
+                categoryField.innerHTML = '<input type="text" id="category" name="category" required>';
                 document.getElementById('incomeBtn').classList.add('selected');
             } else {
-                document.getElementById('categoryField').innerHTML = '<select id="category" name="category" required>{% for category in categories %}<option value="{{ category }}">{{ category }}</option>{% endfor %}</select>';
+                categoryField.innerHTML = '<select id="category" name="category" required>{% for category in categories %}<option value="{{ category }}">{{ category }}</option>{% endfor %}</select>';
                 document.getElementById('expenseBtn').classList.add('selected');
             }
+
+            // Убедимся, что ширина и высота полей не изменяются
+            document.querySelectorAll('#categoryField input, #categoryField select').forEach(el => {
+                el.style.width = '100%';
+                el.style.boxSizing = 'border-box';
+            });
         }
 
         function showResultMessage(operation, chat_id) {

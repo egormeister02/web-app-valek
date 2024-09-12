@@ -50,6 +50,13 @@ button {
     background-color: #ffe599;
     color: #333;
     transition: transform 0.3s;
+    width: 120px; /* Фиксированная ширина кнопок */
+    height: 40px; /* Фиксированная высота кнопок */
+}
+
+input, select {
+    width: 100%; /* Поля ввода занимают всю ширину контейнера */
+    box-sizing: border-box; /* Учитываем padding в общей ширине */
 }
 
 button:active {
@@ -76,6 +83,11 @@ button:focus {
     border-radius: 8px;
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#categoryField {
+    width: 100%; /* Поле для категории занимает всю ширину контейнера */
+    box-sizing: border-box; /* Учитываем padding в общей ширине */
 }
 
 /* Адаптивные стили для экранов до 600px */
