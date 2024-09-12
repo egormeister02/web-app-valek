@@ -9,13 +9,13 @@
         function selectType(type) {
             document.getElementById('expenseBtn').classList.remove('selected');
             document.getElementById('incomeBtn').classList.remove('selected');
-            document.getElementById('type').value = 'Расход';
+            document.getElementById('type').value = type;
 
             if (type === 'Доход') {
-                document.getElementById('categoryField').innerHTML = '<input type="text" id="category" name="category">';
+                document.getElementById('categoryField').innerHTML = '<input type="text" id="category" name="category" required>';
                 document.getElementById('incomeBtn').classList.add('selected');
             } else {
-                document.getElementById('categoryField').innerHTML = '<select id="category" name="category">{% for category in categories %}<option value="{{ category }}">{{ category }}</option>{% endfor %}</select>';
+                document.getElementById('categoryField').innerHTML = '<select id="category" name="category" required>{% for category in categories %}<option value="{{ category }}">{{ category }}</option>{% endfor %}</select>';
                 document.getElementById('expenseBtn').classList.add('selected');
             }
         }
@@ -30,8 +30,35 @@
             }, 3000);
         }
 
+        function validateForm() {
+            const date = document.getElementById('date').value;
+            const type = document.getElementById('type').value;
+            const category = document.getElementById('category').value;
+            const amount = document.getElementById('amount').value;
+
+            if (!date) {
+                alert('Пожалуйста, укажите дату.');
+                return false;
+            }
+            if (!category) {
+                alert('Пожалуйста, выберите категорию.');
+                return false;
+            }
+            if (!amount || amount <= 0) {
+                alert('Пожалуйста, укажите сумму больше 0.');
+                return false;
+            }
+
+            return true;
+        }
+
         function submitForm(event) {
             event.preventDefault();
+
+            // Проверяем, что все обязательные поля заполнены
+            if (!validateForm()) {
+                return;
+            }
 
             const formData = new FormData(event.target);
             const chatId = document.getElementById('chat_id').value;  // Получаем chat_id из скрытого поля
@@ -50,6 +77,11 @@
                 alert('Произошла ошибка при отправке данных.');
             });
         }
+
+        // Установим тип по умолчанию при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            selectType('Расход');
+        });
     </script>
 </head>
 <body>
@@ -59,19 +91,18 @@
             <input type="hidden" id="chat_id" name="chat_id" value="{{ chat_id }}">
 
             <label for="date">Дата:</label>
-            <input type="date" id="date" name="date" value="{{ datetime.date.today() }}">
+            <input type="date" id="date" name="date" required>
 
             <label for="type">Тип записи:</label>
             <div>
-                <button type="button" id="expenseBtn" onclick="selectType('Расход')" aria-pressed="false">Расход</button>
-                <button type="button" id="incomeBtn" onclick="selectType('Доход')" aria-pressed="false">Доход</button>
-
-                <input type="hidden" id="type" name="type" value="">
+                <button type="button" id="expenseBtn" onclick="selectType('Расход')">Расход</button>
+                <button type="button" id="incomeBtn" onclick="selectType('Доход')">Доход</button>
+                <input type="hidden" id="type" name="type" value="Расход"> <!-- Значение по умолчанию -->
             </div>
 
             <label for="category">Категория:</label>
             <div id="categoryField">
-                <select id="category" name="category">
+                <select id="category" name="category" required>
                     {% for category in categories %}
                     <option value="{{ category }}">{{ category }}</option>
                     {% endfor %}
@@ -79,7 +110,7 @@
             </div>
 
             <label for="amount">Сумма:</label>
-            <input type="number" id="amount" name="amount" step="0.01">
+            <input type="number" id="amount" name="amount" step="0.01" required>
 
             <button type="submit">ОК</button>
         </form>

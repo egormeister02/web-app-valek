@@ -38,6 +38,12 @@ def add_transaction(date, category, type, amount):
     formatted_date = date_obj.strftime('%d.%m.%Y')
     values = [[formatted_date, category, type, amount]]
     body = {'values': values}
+    '''
+    sheet.values().append(spreadsheetId=app.config['GOOGLE_SHEET_ID'],
+                          range='Траты!D:G',
+                          valueInputOption='USER_ENTERED',
+                          body=body).execute()
+    '''
     return f"\n{formatted_date} \n{category} \n{type} \n{amount}"
 
 @app.route('/form', methods=['GET', 'POST'])
