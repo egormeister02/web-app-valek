@@ -41,20 +41,13 @@ input, select, button {
     border: 1px solid #cccccc;
     border-radius: 5px;
     width: 100%; /* Поля ввода занимают всю ширину контейнера */
-    box-sizing: border-box; /* Учитываем padding в общей ширине */
+    box-sizing: border-box; /* Учитываем padding в ширину */
 }
 
 input[type="date"], input[type="number"], select {
     height: 40px; /* Устанавливаем высоту для полей ввода */
     font-size: 16px; /* Устанавливаем размер шрифта */
     padding: 10px; /* Устанавливаем padding */
-    box-sizing: border-box; /* Учитываем padding и border в ширину */
-}
-
-input[type="date"] {
-    width: 100%; /* Поле ввода занимает всю ширину контейнера */
-    box-sizing: border-box; /* Учитываем padding и border в ширину */
-    margin: 0; /* Убираем отступы, если они есть */
 }
 
 button {
@@ -62,6 +55,7 @@ button {
     color: #333;
     transition: transform 0.3s;
     height: 40px; /* Фиксированная высота кнопок */
+    font-size: 16px; /* Устанавливаем размер шрифта для кнопок */
 }
 
 button:active {
@@ -76,9 +70,7 @@ button.selected {
 button.type-btn {
     flex: 1; /* Кнопки занимают равные доли доступного пространства */
     max-width: 50%; /* Ограничиваем максимальную ширину кнопок до половины контейнера */
-    padding: 10px;
-    margin: 10px; /* Убираем отступы между кнопками */
-    box-sizing: border-box; /* Учитываем padding в ширине кнопок */
+    margin: 0 5px; /* Устанавливаем небольшой отступ по горизонтали */
 }
 
 button:focus {
