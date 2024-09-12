@@ -10,19 +10,24 @@ body {
 }
 
 .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background: #f7cb4d;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
     width: 100%; /* Устанавливаем ширину контейнера */
     max-width: 500px; /* Максимальная ширина контейнера */
-    box-sizing: border-box; /* Учитываем padding в ширине */
+    box-sizing: border-box; /* Учитываем padding в ширину */
 }
 
-.type-buttons {
+form {
     display: flex;
-    justify-content: center; /* Центрируем кнопки по горизонтали */
+    flex-direction: column;
+    width: 100%; /* Форму растягиваем на всю ширину контейнера */
+    box-sizing: border-box; /* Учитываем padding и border в ширину */
 }
 
 form {
@@ -45,11 +50,16 @@ input, select, button {
 }
 
 input[type="date"], input[type="number"], select {
-    width: 100%;
     height: 40px; /* Устанавливаем высоту для полей ввода */
     font-size: 16px; /* Устанавливаем размер шрифта */
     padding: 10px; /* Устанавливаем padding */
     box-sizing: border-box; /* Учитываем padding и border в ширину */
+}
+
+input[type="date"] {
+    width: 100%; /* Поле ввода занимает всю ширину контейнера */
+    box-sizing: border-box; /* Учитываем padding и border в ширину */
+    margin: 0; /* Убираем отступы, если они есть */
 }
 
 button {
