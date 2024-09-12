@@ -15,24 +15,15 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-}
-
-h1 {
-    margin-bottom: 20px;
-}
-
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    color: white;
-    background-color: #007bff;
-    text-decoration: none;
-    border-radius: 5px;
+    width: 100%; /* Устанавливаем ширину контейнера */
+    max-width: 500px; /* Максимальная ширина контейнера */
+    box-sizing: border-box; /* Учитываем padding в ширине */
 }
 
 form {
     display: flex;
     flex-direction: column;
+    width: 100%; /* Форму растягиваем на всю ширину контейнера */
 }
 
 label {
@@ -44,19 +35,15 @@ input, select, button {
     margin-bottom: 10px;
     border: 1px solid #cccccc;
     border-radius: 5px;
+    width: 100%; /* Поля ввода занимают всю ширину контейнера */
+    box-sizing: border-box; /* Учитываем padding в общей ширине */
 }
 
 button {
     background-color: #ffe599;
     color: #333;
     transition: transform 0.3s;
-    width: 120px; /* Фиксированная ширина кнопок */
     height: 40px; /* Фиксированная высота кнопок */
-}
-
-input, select {
-    width: 100%; /* Поля ввода занимают всю ширину контейнера */
-    box-sizing: border-box; /* Учитываем padding в общей ширине */
 }
 
 button:active {
@@ -114,4 +101,3 @@ button:focus {
         box-sizing: border-box; /* Padding и margin не влияют на ширину */
     }
 }
-
