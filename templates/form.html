@@ -86,9 +86,24 @@
             });
         }
 
+        function handleKeyDown(event) {
+            // Проверяем, что нажата клавиша "Enter"
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Предотвращаем отправку формы
+                const form = document.getElementById('transactionForm');
+                const activeElement = document.activeElement;
+                // Убираем фокус с текущего активного элемента
+                if (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA') {
+                    activeElement.blur();
+                }
+                // Можно добавить дополнительную логику, если нужно
+            }
+        }
+
         // Установим тип по умолчанию при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
             selectType('Расход');
+            document.getElementById('transactionForm').addEventListener('keydown', handleKeyDown);
         });
     </script>
 </head>
