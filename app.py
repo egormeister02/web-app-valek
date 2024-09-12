@@ -20,11 +20,34 @@ def get_google_sheets_service():
 
 def send_telegram_message(chat_id, text):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    
+    # URL для открытия мини-приложения
+    mini_app_url = f"https://46.8.230.15.nip.io/form?chat_id={chat_id}"
+    
+    # Кнопка для мини-приложения
+    inline_keyboard = {
+        "inline_keyboard": [
+            [
+                {
+                    "text": "Добавить новую запись",
+                    "url": mini_app_url
+                }
+            ]
+        ]
+    }
+    
     payload = {
         'chat_id': chat_id,
-        'text': text
+        'text': text,
+        'reply_markup': inline_keyboard
     }
-    requests.post(url, json=payload)
+    
+    response = requests.post(url, json=payload)
+    
+    # Проверка на успешность запроса
+    if response.status_code != 200:
+        print(f"Failed to send message. Status code: {response.status_code}")
+        print(f"Response: {response.text}")
 
 def get_categories():
     sheet = get_google_sheets_service()
