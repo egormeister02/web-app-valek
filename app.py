@@ -106,6 +106,8 @@ def add_transaction(date, category, type, amount):
         else:
             logging.warning("Не удалось получить диапазон добавленных данных.")
 
+        return f"{formatted_date}\n{category}\n{type}\n{amount}"
+
     except Exception as e:
         # Логирование ошибок
         logging.error(f"Ошибка при добавлении транзакции: {e}")
