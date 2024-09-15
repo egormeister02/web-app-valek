@@ -85,6 +85,8 @@ def get_last_filled_row(sheet, spreadsheet_id, range_name):
     else:
         return 0  # Если данных нет, возвращаем 0
 
+from googleapiclient.errors import HttpError
+
 def add_transaction(date, category, type, amount):
     try:
         # Логирование начала работы функции
@@ -92,7 +94,7 @@ def add_transaction(date, category, type, amount):
         
         # Преобразование даты
         date_obj = datetime.datetime.strptime(date, '%Y-%m-%d')
-        formatted_date = date_obj.strftime('%d.%m.%Y')
+        formatted_date = date_obj.strftime('%d.%м.%Y')
         logging.info(f"Форматированная дата: {formatted_date}")
         
         # Формирование данных для записи
@@ -107,14 +109,16 @@ def add_transaction(date, category, type, amount):
         last_row = get_last_filled_row(sheet, spreadsheet_id, 'Траты!D:D')
         next_row = last_row + 1
         
-        # Добавление данных в следующую строку
+        # Обновление данных в диапазоне D:G
         result = sheet.values().update(
             spreadsheetId=spreadsheet_id,
             range=f'Траты!D{next_row}:G{next_row}',
             valueInputOption='USER_ENTERED',
             body=body
         ).execute()
-
+        
+        # Логирование результата
+        logging.info(f"Ответ от API: {result}")
         
         # Извлечение диапазона добавленных данных
         updated_range = result.get('updatedRange')
@@ -122,6 +126,10 @@ def add_transaction(date, category, type, amount):
             logging.info(f"Данные успешно добавлены в диапазон: {updated_range}")
         else:
             logging.warning("Не удалось получить диапазон добавленных данных.")
+    
+    except HttpError as error:
+        # Логирование ошибок Google API
+        logging.error(f"Ошибка Google API: {error}")
     
         return f"{formatted_date}\n{category}\n{type}\n{amount}"
     
