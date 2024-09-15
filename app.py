@@ -106,7 +106,7 @@ def add_transaction(date, category, type, amount):
         spreadsheet_id = app.config['GOOGLE_SHEET_ID']
         
         # Определение последней заполненной строки в диапазоне D:G
-        last_row = get_last_filled_row(sheet, spreadsheet_id, 'Траты!D:D')
+        last_row = get_last_filled_row(sheet, spreadsheet_id, 'Траты!D:G')
         next_row = last_row + 1
         
         # Обновление данных в диапазоне D:G
@@ -131,12 +131,13 @@ def add_transaction(date, category, type, amount):
         # Логирование ошибок Google API
         logging.error(f"Ошибка Google API: {error}")
     
-        return f"{formatted_date}\n{category}\n{type}\n{amount}"
+        
     
     except Exception as e:
         # Логирование ошибок
         logging.error(f"Ошибка при добавлении транзакции: {e}")
 
+    return f"{formatted_date}\n{category}\n{type}\n{amount}"
 
 
 
