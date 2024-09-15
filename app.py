@@ -74,6 +74,17 @@ logging.basicConfig(
     ]
 )
 
+def get_last_filled_row(sheet, spreadsheet_id, range_name):
+    # Получение всех данных из указанного диапазона
+    result = sheet.values().get(spreadsheetId=spreadsheet_id, range=range_name).execute()
+    values = result.get('values', [])
+    
+    # Определение последней заполненной строки
+    if values:
+        return len(values)  # Последняя заполненная строка в диапазоне
+    else:
+        return 0  # Если данных нет, возвращаем 0
+
 def add_transaction(date, category, type, amount):
     try:
         # Логирование начала работы функции
@@ -90,27 +101,34 @@ def add_transaction(date, category, type, amount):
         
         # Получение доступа к Google Sheets API
         sheet = get_google_sheets_service()
+        spreadsheet_id = app.config['GOOGLE_SHEET_ID']
         
-        # Добавление данных в таблицу
-        result = sheet.values().append(
-            spreadsheetId=app.config['GOOGLE_SHEET_ID'],
-            range='Траты!D:G',
+        # Определение последней заполненной строки в диапазоне D:G
+        last_row = get_last_filled_row(sheet, spreadsheet_id, 'Траты!D:D')
+        next_row = last_row + 1
+        
+        # Добавление данных в следующую строку
+        result = sheet.values().update(
+            spreadsheetId=spreadsheet_id,
+            range=f'Траты!D{next_row}:G{next_row}',
             valueInputOption='USER_ENTERED',
             body=body
         ).execute()
+
         
         # Извлечение диапазона добавленных данных
-        updated_range = result.get('updates', {}).get('updatedRange')
+        updated_range = result.get('updatedRange')
         if updated_range:
             logging.info(f"Данные успешно добавлены в диапазон: {updated_range}")
         else:
             logging.warning("Не удалось получить диапазон добавленных данных.")
-
+    
         return f"{formatted_date}\n{category}\n{type}\n{amount}"
-
+    
     except Exception as e:
         # Логирование ошибок
         logging.error(f"Ошибка при добавлении транзакции: {e}")
+
 
 
 
