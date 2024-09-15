@@ -6,6 +6,7 @@ import os
 from googleapiclient.discovery import build
 from google.oauth2.service_account import Credentials
 from config import Config
+import logging
 
 TELEGRAM_BOT_TOKEN = '7208144254:AAFlfsPMukGH5OX0NX0yzJph6Qk0JGGA-Ns'
 
@@ -61,18 +62,55 @@ def get_categories():
     categories = result.get('values', [])
     return [item[0] for item in categories if item]
 
+
+
+# Настройка логгирования
+logging.basicConfig(
+    level=logging.INFO,  # Уровень логгирования
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler("app.log"),
+        logging.StreamHandler()
+    ]
+)
+
 def add_transaction(date, category, type, amount):
-    date_obj = datetime.datetime.strptime(date, '%Y-%m-%d')
-    formatted_date = date_obj.strftime('%d.%m.%Y')
-    values = [[formatted_date, category, type, amount]]
-    body = {'values': values}
-    sheet = get_google_sheets_service()
-    sheet.values().append(spreadsheetId=app.config['GOOGLE_SHEET_ID'],
-                          range='Траты!D:G',
-                          valueInputOption='USER_ENTERED',
-                          body=body).execute()
-    
-    return f"\n{formatted_date} \n{category} \n{type} \n{amount}"
+    try:
+        # Логирование начала работы функции
+        logging.info(f"Добавление транзакции: дата={date}, категория={category}, тип={type}, сумма={amount}")
+        
+        # Преобразование даты
+        date_obj = datetime.datetime.strptime(date, '%Y-%m-%d')
+        formatted_date = date_obj.strftime('%d.%m.%Y')
+        logging.info(f"Форматированная дата: {formatted_date}")
+        
+        # Формирование данных для записи
+        values = [[formatted_date, category, type, amount]]
+        body = {'values': values}
+        
+        # Получение доступа к Google Sheets API
+        sheet = get_google_sheets_service()
+        
+        # Добавление данных в таблицу
+        result = sheet.values().append(
+            spreadsheetId=app.config['GOOGLE_SHEET_ID'],
+            range='Траты!D:G',
+            valueInputOption='USER_ENTERED',
+            body=body
+        ).execute()
+        
+        # Извлечение диапазона добавленных данных
+        updated_range = result.get('updates', {}).get('updatedRange')
+        if updated_range:
+            logging.info(f"Данные успешно добавлены в диапазон: {updated_range}")
+        else:
+            logging.warning("Не удалось получить диапазон добавленных данных.")
+
+    except Exception as e:
+        # Логирование ошибок
+        logging.error(f"Ошибка при добавлении транзакции: {e}")
+
+
 
 @app.route('/form', methods=['GET', 'POST'])
 def form():
