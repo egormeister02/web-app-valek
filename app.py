@@ -7,11 +7,18 @@ from googleapiclient.discovery import build
 from google.oauth2.service_account import Credentials
 from config import Config
 import logging
+import threading
+import time
 
 TELEGRAM_BOT_TOKEN = '7208144254:AAFlfsPMukGH5OX0NX0yzJph6Qk0JGGA-Ns'
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
+# Глобальная переменная для кэша категорий
+categories_cache = []
+last_updated = 0  # Время последнего обновления кэша
+CACHE_DURATION = 600  # Время кэширования в секундах (например, 5 минут)
 
 def get_google_sheets_service():
     creds = Credentials.from_service_account_file(app.config['CREDENTIALS_FILE'])
@@ -19,7 +26,27 @@ def get_google_sheets_service():
     sheet = service.spreadsheets()
     return sheet
 
-import requests
+def update_categories_cache():
+    global categories_cache, last_updated
+    while True:
+        sheet = get_google_sheets_service()
+        result = sheet.values().get(spreadsheetId=app.config['GOOGLE_SHEET_ID'],
+                                    range=app.config['CATEGORY_RANGE']).execute()
+        categories_cache = [item[0] for item in result.get('values', []) if item]
+        last_updated = time.time()
+        logging.info("Кэш категорий обновлен.")
+        time.sleep(CACHE_DURATION)  # Ждем заданное количество секунд перед следующим обновлением
+
+# Запуск потока для обновления кэша
+threading.Thread(target=update_categories_cache, daemon=True).start()
+
+def get_categories():
+    global categories_cache, last_updated
+    # Проверка, нужно ли обновить кэш
+    if time.time() - last_updated > CACHE_DURATION:
+        update_categories_cache()  # Обновляем кэш если необходимо
+    return categories_cache
+
 
 def send_telegram_message(chat_id, text):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
@@ -53,15 +80,6 @@ def send_telegram_message(chat_id, text):
     if response.status_code != 200:
         print(f"Failed to send message. Status code: {response.status_code}")
         print(f"Response: {response.text}")
-
-
-def get_categories():
-    sheet = get_google_sheets_service()
-    result = sheet.values().get(spreadsheetId=app.config['GOOGLE_SHEET_ID'],
-                                range=app.config['CATEGORY_RANGE']).execute()
-    categories = result.get('values', [])
-    return [item[0] for item in categories if item]
-
 
 
 # Настройка логгирования
