@@ -32,21 +32,20 @@ def get_google_sheets_service():
 
 def update_categories_cache():
     global categories_cache, last_updated
-    while True:
-        # Если было получено событие остановки (Timeout), выходим из цикла
-        if cache_update_event.wait(timeout=CACHE_DURATION):
-            logging.info("Поток обновления кэша категорий завершен.")
-            break
-        
+    while True:  # Проверяем, нужно ли завершить поток
         try:
-            sheet = get_google_sheets_service()
+            sheet = get_google_sheets_service()  # Получаем сервис для работы с Google Sheets
             result = sheet.values().get(spreadsheetId=app.config['GOOGLE_SHEET_ID'],
                                         range=app.config['CATEGORY_RANGE']).execute()
+            # Обновляем кэш категорий
             categories_cache = [item[0] for item in result.get('values', []) if item]
-            last_updated = time.time()
+            last_updated = time.time()  # Обновляем время последнего обновления
             logging.info("Кэш категорий обновлен.")
         except Exception as e:
             logging.error(f"Ошибка при обновлении кэша категорий: {e}")
+        
+        # Ожидание 10 минут перед следующей итерацией
+        time.sleep(CACHE_DURATION)
 
 
 def get_categories():
