@@ -9,6 +9,9 @@ from config import Config
 import logging
 import threading
 import time
+import gc
+gc.collect()
+
 
 TELEGRAM_BOT_TOKEN = '7208144254:AAFlfsPMukGH5OX0NX0yzJph6Qk0JGGA-Ns'
 
@@ -30,6 +33,11 @@ def get_google_sheets_service():
 def update_categories_cache():
     global categories_cache, last_updated
     while True:
+        # Если было получено событие остановки (Timeout), выходим из цикла
+        if cache_update_event.wait(timeout=CACHE_DURATION):
+            logging.info("Поток обновления кэша категорий завершен.")
+            break
+        
         try:
             sheet = get_google_sheets_service()
             result = sheet.values().get(spreadsheetId=app.config['GOOGLE_SHEET_ID'],
@@ -39,15 +47,9 @@ def update_categories_cache():
             logging.info("Кэш категорий обновлен.")
         except Exception as e:
             logging.error(f"Ошибка при обновлении кэша категорий: {e}")
-        
-        # Ожидаем, пока не будет установлен флаг
-        cache_update_event.wait(CACHE_DURATION)
-        cache_update_event.clear()
+
 
 def get_categories():
-    global categories_cache, last_updated
-    if time.time() - last_updated > CACHE_DURATION:
-        threading.Thread(target=update_categories_cache, daemon=True).start()  # Запуск обновления в новом потоке
     return categories_cache
 
 
@@ -77,7 +79,7 @@ def send_telegram_message(chat_id, text):
         'reply_markup': inline_keyboard
     }
     
-    response = requests.post(url, json=payload)
+    response = requests.post(url, json=payload, timeout=10)  # Тайм-аут 10 секунд
     
     # Проверка на успешность запроса
     if response.status_code != 200:
@@ -185,5 +187,16 @@ def form():
     categories = get_categories()
     return render_template('form.html', categories=categories, chat_id=chat_id, datetime=datetime)
 
+
 if __name__ == '__main__':
-    app.run()
+    # Запускаем поток обновления кэша категорий
+    cache_update_thread = threading.Thread(target=update_categories_cache, daemon=True)
+    cache_update_thread.start()
+
+    try:
+        # Запускаем приложение Flask
+        app.run()
+    finally:
+        # Завершаем поток обновления кэша при завершении приложения
+        cache_update_event.set()  # Сигнализируем потоку завершиться
+        cache_update_thread.join()  # Дожидаемся завершения потока

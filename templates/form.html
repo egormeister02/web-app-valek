@@ -33,9 +33,7 @@
             document.getElementById('result-message').style.display = 'block';
 
             // Перенаправляем на /form с chat_id
-            setTimeout(() => {
-                window.location.href = `/form?chat_id=${chat_id}`;
-            }, 600);
+            document.getElementById('transactionForm').reset();
         }
 
         function validateForm() {
