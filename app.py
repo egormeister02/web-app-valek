@@ -19,6 +19,7 @@ app.config.from_object(Config)
 categories_cache = []
 last_updated = 0  # Время последнего обновления кэша
 CACHE_DURATION = 600  # Время кэширования в секундах (например, 5 минут)
+cache_update_event = threading.Event()
 
 def get_google_sheets_service():
     creds = Credentials.from_service_account_file(app.config['CREDENTIALS_FILE'])
@@ -29,22 +30,24 @@ def get_google_sheets_service():
 def update_categories_cache():
     global categories_cache, last_updated
     while True:
-        sheet = get_google_sheets_service()
-        result = sheet.values().get(spreadsheetId=app.config['GOOGLE_SHEET_ID'],
-                                    range=app.config['CATEGORY_RANGE']).execute()
-        categories_cache = [item[0] for item in result.get('values', []) if item]
-        last_updated = time.time()
-        logging.info("Кэш категорий обновлен.")
-        time.sleep(CACHE_DURATION)  # Ждем заданное количество секунд перед следующим обновлением
-
-# Запуск потока для обновления кэша
-threading.Thread(target=update_categories_cache, daemon=True).start()
+        try:
+            sheet = get_google_sheets_service()
+            result = sheet.values().get(spreadsheetId=app.config['GOOGLE_SHEET_ID'],
+                                        range=app.config['CATEGORY_RANGE']).execute()
+            categories_cache = [item[0] for item in result.get('values', []) if item]
+            last_updated = time.time()
+            logging.info("Кэш категорий обновлен.")
+        except Exception as e:
+            logging.error(f"Ошибка при обновлении кэша категорий: {e}")
+        
+        # Ожидаем, пока не будет установлен флаг
+        cache_update_event.wait(CACHE_DURATION)
+        cache_update_event.clear()
 
 def get_categories():
     global categories_cache, last_updated
-    # Проверка, нужно ли обновить кэш
     if time.time() - last_updated > CACHE_DURATION:
-        update_categories_cache()  # Обновляем кэш если необходимо
+        threading.Thread(target=update_categories_cache, daemon=True).start()  # Запуск обновления в новом потоке
     return categories_cache
 
 
