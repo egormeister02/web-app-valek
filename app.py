@@ -59,7 +59,7 @@ async def process_transaction_queue():
     while True:
         transaction = await transaction_queue.get()  # Ожидаем новую задачу
         try:
-            date, category, type, amount = transaction
+            date, category, type, amount, chat_id = transaction
             logging.info(f"Добавление транзакции: дата={date}, категория={category}, тип={type}, сумма={amount}")
 
             # Преобразование даты
@@ -80,9 +80,12 @@ async def process_transaction_queue():
             ).execute()
             
             logging.info(f"Транзакция успешно добавлена: {result}")
+            
+            await send_telegram_message(chat_id, f"{formatted_date}\n{category}\n{type}\n{amount}")
 
         except Exception as e:
             logging.error(f"Ошибка при добавлении транзакции: {e}")
+            await send_telegram_message(chat_id, f"Ошибка при добавлении транзакции\n{formatted_date}\n{category}\n{type}\n{amount}")
 
         transaction_queue.task_done()  # Помечаем задачу как выполненную
 
@@ -114,8 +117,8 @@ async def send_telegram_message(chat_id, text):
                 logging.error(f"Response: {await response.text()}")
 
 # Асинхронная функция для добавления транзакции в очередь
-async def add_transaction_to_queue(date, category, type, amount):
-    await transaction_queue.put((date, category, type, amount))  # Добавляем транзакцию в очередь
+async def add_transaction_to_queue(date, category, type, amount, chat_id):
+    await transaction_queue.put((date, category, type, amount, chat_id))  # Добавляем транзакцию в очередь
     logging.info(f"Транзакция добавлена в очередь: {date}, {category}, {type}, {amount}")
 
 @app.route('/form', methods=['GET', 'POST'])
@@ -129,7 +132,7 @@ async def form():
         amount = form_data.get('amount')
 
         # Добавляем транзакцию в очередь (асинхронно)
-        asyncio.create_task(add_transaction_to_queue(date, category, type, amount))  # "Fire and forget"
+        asyncio.create_task(add_transaction_to_queue(date, category, type, amount, chat_id))  # "Fire and forget"
         
         # Мгновенно возвращаем ответ
         return jsonify(message="Транзакция добавлена в очередь, скоро будет обработана.")
