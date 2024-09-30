@@ -28,16 +28,15 @@
             });
         }
 
-        function showResultMessage(operation, chat_id) {
-            document.getElementById('result-message').innerHTML = 'Зарегистрирована операция: ' + operation;
-            document.getElementById('result-message').style.display = 'block';
+        function showResultMessage(operation) {
+            const resultMessage = document.getElementById('result-message');
+            resultMessage.innerHTML = 'Зарегистрирована операция: ' + operation;
+            resultMessage.style.display = 'block';
 
-            // Перенаправляем на /form с chat_id
+            // Скрыть сообщение через 5 секунд
             setTimeout(() => {
-                window.location.href = `/form?chat_id=${chat_id}`;
+                resultMessage.style.display = 'none';
             }, 500);
-
-            //document.getElementById('transactionForm').reset();
         }
 
         function validateForm() {
@@ -62,7 +61,7 @@
             return true;
         }
 
-        // Обновление функции submitForm
+        // Обновление функции submitForm для отправки через AJAX
         function submitForm(event) {
             event.preventDefault();
 
@@ -80,23 +79,11 @@
             })
             .then(response => response.json())
             .then(data => {
-                // Передаем chat_id в функцию для перенаправления
-                showResultMessage(data.message, chatId);
+                // Показать сообщение об успешной регистрации
+                showResultMessage(data.message);
                 
-                // Восстанавливаем значения полей формы после отправки
-                document.getElementById('date').value = formData.get('date');
-                document.getElementById('type').value = formData.get('type');
-                document.getElementById('amount').value = formData.get('amount');
-
-                // Устанавливаем выбранную категорию
-                const categorySelect = document.getElementById('category');
-                const selectedCategory = formData.get('category');
-                if (selectedCategory) {
-                    categorySelect.value = selectedCategory;
-                }
-                
-                // Вызываем функцию выбора типа, чтобы правильно отобразить кнопку
-                selectType(formData.get('type'));
+                // Не очищаем поля, но даем возможность внести новую запись
+                // Поля сохраняются автоматически после отправки
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -108,13 +95,11 @@
             // Проверяем, что нажата клавиша "Enter"
             if (event.key === 'Enter') {
                 event.preventDefault(); // Предотвращаем отправку формы
-                const form = document.getElementById('transactionForm');
                 const activeElement = document.activeElement;
                 // Убираем фокус с текущего активного элемента
                 if (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA') {
                     activeElement.blur();
                 }
-                // Можно добавить дополнительную логику, если нужно
             }
         }
 
