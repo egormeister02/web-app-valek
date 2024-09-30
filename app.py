@@ -39,12 +39,10 @@ async def update_category_cache():
     while True:
         try:
             logging.info("Обновление кэша категорий из Google Sheets")
-            sheet = await get_google_sheets_service()
-            spreadsheet = await sheet.open_by_key(app.config['GOOGLE_SHEET_ID'])
-            worksheet = await spreadsheet.worksheet(app.config['CATEGORY_RANGE'])
-
-            # Метод get_all_values синхронный, его не нужно await
-            categories = worksheet.get_all_values()
+            sheet = get_google_sheets_service()
+            result = sheet.values().get(spreadsheetId=app.config['GOOGLE_SHEET_ID'],
+                                range=app.config['CATEGORY_RANGE']).execute()
+            categories = result.get('values', [])
             category_cache = [item[0] for item in categories if item]
 
             logging.info(f"Кэш категорий обновлен: {category_cache}")
