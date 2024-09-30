@@ -109,12 +109,12 @@ async def add_transaction(date, category, type, amount):
 @app.route('/form', methods=['GET', 'POST'])
 async def form():
     if request.method == 'POST':
-        form_data = await request.form
-        chat_id = form_data.get('chat_id')
-        date = form_data.get('date')
-        category = form_data.get('category')
-        type = form_data.get('type')
-        amount = form_data.get('amount')
+         # Получаем chat_id из тела POST-запроса
+        chat_id = request.form.get('chat_id')
+        date = request.form.get('date')
+        category = request.form.get('category')
+        type = request.form.get('type')
+        amount = request.form.get('amount')
 
         operation = await add_transaction(date, category, type, amount)
         await send_telegram_message(chat_id, operation)
