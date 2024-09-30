@@ -45,16 +45,18 @@ async def update_category_cache():
             spreadsheet = await sheet.open_by_key(app.config['GOOGLE_SHEET_ID'])
             worksheet = await spreadsheet.worksheet(app.config['CATEGORY_RANGE'])
 
+            logging.debug(f"Полученный лист: {worksheet}")
+            
             # Метод get_all_values синхронный, его не нужно await
             categories = worksheet.get_all_values()
-            category_cache = [item[0] for item in categories if item]
+            logging.debug(f"Полученные категории: {categories}")
 
+            category_cache = [item[0] for item in categories if item]
             logging.info(f"Кэш категорий обновлен: {category_cache}")
 
         except Exception as e:
             logging.error(f"Ошибка при обновлении кэша категорий: {e}")
 
-        # Ждем 10 минут перед следующим обновлением
         await asyncio.sleep(600)
 
 # Функция для получения категорий из кэша
