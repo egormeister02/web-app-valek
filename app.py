@@ -11,9 +11,12 @@ from config import Config
 app = Quart(__name__)
 app.config.from_object(Config)
 
+# Глобальная переменная для кэширования категорий
+category_cache = []
+
 # Логирование
 logging.basicConfig(
-    level=logging.INFO,  # Измените на DEBUG для более детализированных логов
+    level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
         logging.FileHandler("app.log"),
@@ -23,13 +26,38 @@ logging.basicConfig(
 
 # Функция для получения учетных данных Google
 def get_google_creds():
-    scopes = ['https://www.googleapis.com/auth/spreadsheets']  # OAuth-область для Google Sheets
-    return Credentials.from_service_account_file(app.config['CREDENTIALS_FILE'], scopes=scopes)
+    return Credentials.from_service_account_file(app.config['CREDENTIALS_FILE'])
 
 # Асинхронная функция для получения Google Sheets
 async def get_google_sheets_service():
     agcm = AsyncioGspreadClientManager(get_google_creds)
     return await agcm.authorize()
+
+# Асинхронная задача для обновления кэша каждые 10 минут
+async def update_category_cache():
+    global category_cache
+    while True:
+        try:
+            logging.info("Обновление кэша категорий из Google Sheets")
+            sheet = await get_google_sheets_service()
+            spreadsheet = await sheet.open_by_key(app.config['GOOGLE_SHEET_ID'])
+            worksheet = await spreadsheet.worksheet(app.config['CATEGORY_RANGE'])
+
+            # Метод get_all_values синхронный, его не нужно await
+            categories = worksheet.get_all_values()
+            category_cache = [item[0] for item in categories if item]
+
+            logging.info(f"Кэш категорий обновлен: {category_cache}")
+
+        except Exception as e:
+            logging.error(f"Ошибка при обновлении кэша категорий: {e}")
+
+        # Ждем 10 минут перед следующим обновлением
+        await asyncio.sleep(600)
+
+# Функция для получения категорий из кэша
+def get_categories():
+    return category_cache
 
 # Асинхронная функция для отправки сообщений в Telegram
 async def send_telegram_message(chat_id, text):
@@ -54,24 +82,6 @@ async def send_telegram_message(chat_id, text):
                 logging.error(f"Failed to send message. Status code: {response.status}")
                 logging.error(f"Response: {await response.text()}")
 
-# Асинхронная функция для получения категорий
-async def get_categories():
-    try:
-        logging.info("Получение списка категорий из Google Sheets")
-        sheet = await get_google_sheets_service()
-        spreadsheet = await sheet.open_by_key(app.config['GOOGLE_SHEET_ID'])
-        
-        # Метод worksheet не является асинхронным
-        worksheet = spreadsheet.worksheet(app.config['CATEGORY_RANGE'])
-        categories = await worksheet.get_all_values()
-        logging.debug(f"Получены категории: {categories}")
-        
-        return [item[0] for item in categories if item]
-    
-    except Exception as e:
-        logging.error(f"Ошибка при получении категорий: {e}")
-        return []
-
 # Асинхронная функция для добавления транзакции
 async def add_transaction(date, category, type, amount):
     try:
@@ -92,7 +102,7 @@ async def add_transaction(date, category, type, amount):
         last_row = len(all_values) + 1
         
         # Обновление данных в таблице
-        await worksheet.update(f'D{last_row}:G{last_row}', values)
+        worksheet.update(f'D{last_row}:G{last_row}', values)
         
         logging.info(f"Транзакция добавлена успешно в строку: {last_row}")
         return f"{formatted_date}\n{category}\n{type}\n{amount}"
@@ -117,8 +127,13 @@ async def form():
         return jsonify(message=operation)
 
     chat_id = request.args.get('chat_id')
-    categories = await get_categories()
+    categories = get_categories()  # Получаем категории из кэша
     return await render_template('form.html', categories=categories, chat_id=chat_id, datetime=datetime)
+
+# Запуск фоновой задачи для обновления кэша
+@app.before_serving
+async def start_background_tasks():
+    app.add_background_task(update_category_cache)
 
 if __name__ == '__main__':
     app.run()
