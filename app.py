@@ -129,9 +129,9 @@ async def form():
         amount = form_data.get('amount')
 
         # Добавляем транзакцию в очередь (асинхронно)
-        await add_transaction_to_queue(date, category, type, amount)
+        asyncio.create_task(add_transaction_to_queue(date, category, type, amount))  # "Fire and forget"
 
-        # Отправляем сообщение пользователю через Telegram
+        # Отправляем сообщение пользователю через Telegram (не блокируем обработку транзакции)
         await send_telegram_message(chat_id, "Транзакция добавлена, обработка будет завершена в фоновом режиме.")
         
         # Мгновенно возвращаем ответ
@@ -140,6 +140,7 @@ async def form():
     chat_id = request.args.get('chat_id')
     categories = get_categories()  # Получаем категории из кэша
     return await render_template('form.html', categories=categories, chat_id=chat_id, datetime=datetime)
+
 
 # Запуск фоновых задач для обновления кэша и обработки транзакций
 @app.before_serving
