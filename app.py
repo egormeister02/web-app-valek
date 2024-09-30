@@ -57,6 +57,7 @@ async def update_category_cache():
 
 # Асинхронная функция для записи транзакций в Google Sheets
 async def process_transaction_queue():
+    global category_cache
     while True:
         transaction = await transaction_queue.get()  # Ожидаем новую задачу
         try:
