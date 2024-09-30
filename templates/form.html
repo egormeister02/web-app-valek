@@ -32,8 +32,9 @@
             document.getElementById('result-message').innerHTML = 'Зарегистрирована операция: ' + operation;
             document.getElementById('result-message').style.display = 'block';
 
+            // Перенаправляем на /form с chat_id
             setTimeout(() => {
-                resultMessage.style.display = 'none';
+                window.location.href = `/form?chat_id=${chat_id}`;
             }, 1000);
 
             //document.getElementById('transactionForm').reset();
