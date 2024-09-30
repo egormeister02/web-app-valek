@@ -14,6 +14,9 @@ app.config.from_object(Config)
 # Глобальная переменная для кэширования категорий
 category_cache = []
 
+# Очередь для фоновых задач
+transaction_queue = asyncio.Queue()
+
 # Логирование
 logging.basicConfig(
     level=logging.INFO,
@@ -51,6 +54,38 @@ async def update_category_cache():
         # Ждем 10 минут перед следующим обновлением
         await asyncio.sleep(600)
 
+# Асинхронная функция для записи транзакций в Google Sheets
+async def process_transaction_queue():
+    while True:
+        transaction = await transaction_queue.get()  # Ожидаем новую задачу
+        try:
+            date, category, type, amount = transaction
+            logging.info(f"Добавление транзакции: дата={date}, категория={category}, тип={type}, сумма={amount}")
+
+            # Преобразование даты
+            date_obj = datetime.datetime.strptime(date, '%Y-%m-%d')
+            formatted_date = date_obj.strftime('%d.%m.%Y')
+
+            values = [[formatted_date, category, type, amount]]
+            
+            sheet = get_google_creds()
+            last_row = sheet.values().get(spreadsheetId=app.config['GOOGLE_SHEET_ID'], range='Траты!D:G').execute()
+            next_row = len(last_row.get('values', [])) + 1
+
+            result = sheet.values().update(
+                spreadsheetId=app.config['GOOGLE_SHEET_ID'],
+                range=f'Траты!D{next_row}:G{next_row}',
+                valueInputOption='USER_ENTERED',
+                body={'values': values}
+            ).execute()
+            
+            logging.info(f"Транзакция успешно добавлена: {result}")
+
+        except Exception as e:
+            logging.error(f"Ошибка при добавлении транзакции: {e}")
+
+        transaction_queue.task_done()  # Помечаем задачу как выполненную
+
 # Функция для получения категорий из кэша
 def get_categories():
     return category_cache
@@ -78,35 +113,10 @@ async def send_telegram_message(chat_id, text):
                 logging.error(f"Failed to send message. Status code: {response.status}")
                 logging.error(f"Response: {await response.text()}")
 
-# Асинхронная функция для добавления транзакции
-async def add_transaction(date, category, type, amount):
-    try:
-        logging.info(f"Добавление транзакции: дата={date}, категория={category}, тип={type}, сумма={amount}")
-        
-        # Преобразование даты
-        date_obj = datetime.datetime.strptime(date, '%Y-%m-%d')
-        formatted_date = date_obj.strftime('%d.%m.%Y')
-        logging.info(f"Форматированная дата: {formatted_date}")
-        
-        values = [[formatted_date, category, type, amount]]
-        
-        sheet = get_google_creds()
-        last_row = sheet.values().get(spreadsheetId=app.config['GOOGLE_SHEET_ID'], range='Траты!D:G').execute()
-        next_row = len(last_row.get('values', [])) + 1
-        
-        result = sheet.values().update(
-            spreadsheetId=app.config['GOOGLE_SHEET_ID'],
-            range=f'Траты!D{next_row}:G{next_row}',
-            valueInputOption='USER_ENTERED',
-            body={'values': values}
-        ).execute()
-        
-        logging.info(f"Транзакция успешно добавлена: {result}")
-        return f"{formatted_date}\n{category}\n{type}\n{amount}"
-    
-    except Exception as e:
-        logging.error(f"Ошибка при добавлении транзакции: {e}")
-        return None
+# Асинхронная функция для добавления транзакции в очередь
+async def add_transaction_to_queue(date, category, type, amount):
+    await transaction_queue.put((date, category, type, amount))  # Добавляем транзакцию в очередь
+    logging.info(f"Транзакция добавлена в очередь: {date}, {category}, {type}, {amount}")
 
 @app.route('/form', methods=['GET', 'POST'])
 async def form():
@@ -118,19 +128,24 @@ async def form():
         type = form_data.get('type')
         amount = form_data.get('amount')
 
-        operation = await add_transaction(date, category, type, amount)
-        await send_telegram_message(chat_id, operation)
+        # Добавляем транзакцию в очередь (асинхронно)
+        await add_transaction_to_queue(date, category, type, amount)
+
+        # Отправляем сообщение пользователю через Telegram
+        await send_telegram_message(chat_id, "Транзакция добавлена, обработка будет завершена в фоновом режиме.")
         
-        return jsonify(message=operation)
+        # Мгновенно возвращаем ответ
+        return jsonify(message="Транзакция добавлена в очередь, скоро будет обработана.")
 
     chat_id = request.args.get('chat_id')
     categories = get_categories()  # Получаем категории из кэша
     return await render_template('form.html', categories=categories, chat_id=chat_id, datetime=datetime)
 
-# Запуск фоновой задачи для обновления кэша
+# Запуск фоновых задач для обновления кэша и обработки транзакций
 @app.before_serving
 async def start_background_tasks():
     app.add_background_task(update_category_cache)
+    app.add_background_task(process_transaction_queue)
 
 if __name__ == '__main__':
     app.run()
