@@ -95,8 +95,7 @@ async def process_transaction_queue():
 def get_categories():
     return category_cache
 
-client_session = aiohttp.ClientSession()
-
+# Асинхронная функция для отправки сообщений в Telegram
 async def send_telegram_message(chat_id, text):
     url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
     mini_app_url = f"https://95.182.98.91.nip.io/form?chat_id={chat_id}"
@@ -113,10 +112,11 @@ async def send_telegram_message(chat_id, text):
         'reply_markup': inline_keyboard
     }
     
-    async with client_session.post(url, json=payload) as response:
-        if response.status != 200:
-            logging.error(f"Failed to send message. Status code: {response.status}")
-            logging.error(f"Response: {await response.text()}")
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=payload) as response:
+            if response.status != 200:
+                logging.error(f"Failed to send message. Status code: {response.status}")
+                logging.error(f"Response: {await response.text()}")
 
 # Асинхронная функция для добавления транзакции в очередь
 async def add_transaction_to_queue(date, category, type, amount, chat_id):
