@@ -9,6 +9,8 @@ CATEGORY_RANGE = 'Инфо!A2:A'
 # Путь к файлу с учетными данными
 CREDENTIALS_FILE = 'credentials.json'
 
+TELEGRAM_BOT_TOKEN = '7208144254:AAFlfsPMukGH5OX0NX0yzJph6Qk0JGGA-Ns'
+
 # Конфигурации для Flask
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
