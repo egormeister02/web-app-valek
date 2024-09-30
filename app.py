@@ -130,9 +130,6 @@ async def form():
 
         # Добавляем транзакцию в очередь (асинхронно)
         asyncio.create_task(add_transaction_to_queue(date, category, type, amount))  # "Fire and forget"
-
-        # Отправляем сообщение пользователю через Telegram (не блокируем обработку транзакции)
-        await send_telegram_message(chat_id, "Транзакция добавлена, обработка будет завершена в фоновом режиме.")
         
         # Мгновенно возвращаем ответ
         return jsonify(message="Транзакция добавлена в очередь, скоро будет обработана.")
