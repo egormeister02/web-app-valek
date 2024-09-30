@@ -85,7 +85,7 @@ async def add_transaction(date, category, type, amount):
         
         # Преобразование даты
         date_obj = datetime.datetime.strptime(date, '%Y-%m-%d')
-        formatted_date = date_obj.strftime('%d.%м.%Y')
+        formatted_date = date_obj.strftime('%d.%m.%Y')
         logging.info(f"Форматированная дата: {formatted_date}")
         
         values = [[formatted_date, category, type, amount]]
