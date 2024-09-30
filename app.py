@@ -26,7 +26,9 @@ logging.basicConfig(
 
 # Функция для получения учетных данных Google
 def get_google_creds():
-    return Credentials.from_service_account_file(app.config['CREDENTIALS_FILE'])
+    scopes = ['https://www.googleapis.com/auth/spreadsheets']  # OAuth-область для Google Sheets
+    logging.info(f"Используемые OAuth области: {scopes}")
+    return Credentials.from_service_account_file(app.config['CREDENTIALS_FILE'], scopes=scopes)
 
 # Асинхронная функция для получения Google Sheets
 async def get_google_sheets_service():
