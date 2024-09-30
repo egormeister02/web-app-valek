@@ -14,7 +14,9 @@ TELEGRAM_BOT_TOKEN = '7208144254:AAFlfsPMukGH5OX0NX0yzJph6Qk0JGGA-Ns'
 # Конфигурации для Flask
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
-    DEBUG = True
-    GOOGLE_SHEET_ID = GOOGLE_SHEET_ID
-    CATEGORY_RANGE = CATEGORY_RANGE
-    CREDENTIALS_FILE = CREDENTIALS_FILE
+    
+    DEBUG              =               True
+    GOOGLE_SHEET_ID    =    GOOGLE_SHEET_ID
+    CATEGORY_RANGE     =     CATEGORY_RANGE
+    CREDENTIALS_FILE   =   CREDENTIALS_FILE
+    TELEGRAM_BOT_TOKEN = TELEGRAM_BOT_TOKEN
