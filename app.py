@@ -5,7 +5,7 @@ import logging
 from quart import Quart, render_template, request, jsonify
 import datetime
 from google.oauth2.service_account import Credentials
-from gspread_asyncio import AsyncioGspreadClientManager
+from googleapiclient.discovery import build
 from config import Config
 
 app = Quart(__name__)
@@ -26,14 +26,9 @@ logging.basicConfig(
 
 # Функция для получения учетных данных Google
 def get_google_creds():
-    scopes = ['https://www.googleapis.com/auth/spreadsheets']  # OAuth-область для Google Sheets
-    logging.info(f"Используемые OAuth области: {scopes}")
-    return Credentials.from_service_account_file(app.config['CREDENTIALS_FILE'], scopes=scopes)
-
-# Асинхронная функция для получения Google Sheets
-async def get_google_sheets_service():
-    agcm = AsyncioGspreadClientManager(get_google_creds)
-    return await agcm.authorize()
+    creds = Credentials.from_service_account_file(app.config['CREDENTIALS_FILE'])
+    service = build('sheets', 'v4', credentials=creds)
+    return service.spreadsheets()
 
 # Асинхронная задача для обновления кэша каждые 10 минут
 async def update_category_cache():
@@ -41,22 +36,19 @@ async def update_category_cache():
     while True:
         try:
             logging.info("Обновление кэша категорий из Google Sheets")
-            sheet = await get_google_sheets_service()
-            spreadsheet = await sheet.open_by_key(app.config['GOOGLE_SHEET_ID'])
-            worksheet = await spreadsheet.worksheet(app.config['CATEGORY_RANGE'])
-
-            logging.debug(f"Полученный лист: {worksheet}")
             
-            # Метод get_all_values синхронный, его не нужно await
-            categories = worksheet.get_all_values()
-            logging.debug(f"Полученные категории: {categories}")
-
+            sheet = get_google_creds()
+            result = sheet.values().get(spreadsheetId=app.config['GOOGLE_SHEET_ID'],
+                                        range=app.config['CATEGORY_RANGE']).execute()
+            
+            categories = result.get('values', [])
             category_cache = [item[0] for item in categories if item]
+            
             logging.info(f"Кэш категорий обновлен: {category_cache}")
-
         except Exception as e:
             logging.error(f"Ошибка при обновлении кэша категорий: {e}")
 
+        # Ждем 10 минут перед следующим обновлением
         await asyncio.sleep(600)
 
 # Функция для получения категорий из кэша
@@ -91,24 +83,23 @@ async def add_transaction(date, category, type, amount):
     try:
         logging.info(f"Добавление транзакции: дата={date}, категория={category}, тип={type}, сумма={amount}")
         
-        date_obj = datetime.datetime.strptime(date, '%Y-%m-%d')
-        formatted_date = date_obj.strftime('%d.%m.%Y')
+        date_obj = datetime.datetime.strptime(date, '%Y-%м-%d')
+        formatted_date = date_obj.strftime('%d.%м.%Y')
         
         values = [[formatted_date, category, type, amount]]
-        body = {'values': values}
         
-        sheet = await get_google_sheets_service()
-        spreadsheet = await sheet.open_by_key(app.config['GOOGLE_SHEET_ID'])
-        worksheet = spreadsheet.worksheet('Траты')
+        sheet = get_google_creds()
+        last_row = sheet.values().get(spreadsheetId=app.config['GOOGLE_SHEET_ID'], range='Траты!D:G').execute()
+        next_row = len(last_row.get('values', [])) + 1
         
-        # Получаем последнюю заполненную строку
-        all_values = worksheet.get_all_values()
-        last_row = len(all_values) + 1
+        result = sheet.values().update(
+            spreadsheetId=app.config['GOOGLE_SHEET_ID'],
+            range=f'Траты!D{next_row}:G{next_row}',
+            valueInputOption='USER_ENTERED',
+            body={'values': values}
+        ).execute()
         
-        # Обновление данных в таблице
-        worksheet.update(f'D{last_row}:G{last_row}', values)
-        
-        logging.info(f"Транзакция добавлена успешно в строку: {last_row}")
+        logging.info(f"Транзакция успешно добавлена: {result}")
         return f"{formatted_date}\n{category}\n{type}\n{amount}"
     
     except Exception as e:
