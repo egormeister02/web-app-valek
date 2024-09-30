@@ -13,6 +13,7 @@ app.config.from_object(Config)
 
 # Глобальная переменная для кэширования категорий
 category_cache = []
+google_sheets_service = None
 
 # Очередь для фоновых задач
 transaction_queue = asyncio.Queue()
@@ -40,7 +41,7 @@ async def update_category_cache():
         try:
             logging.info("Обновление кэша категорий из Google Sheets")
             
-            sheet = get_google_creds()
+            sheet = google_sheets_service
             result = sheet.values().get(spreadsheetId=app.config['GOOGLE_SHEET_ID'],
                                         range=app.config['CATEGORY_RANGE']).execute()
             
@@ -68,7 +69,7 @@ async def process_transaction_queue():
 
             values = [[formatted_date, category, type, amount]]
             
-            sheet = get_google_creds()
+            sheet = google_sheets_service
             last_row = sheet.values().get(spreadsheetId=app.config['GOOGLE_SHEET_ID'], range='Траты!D:G').execute()
             next_row = len(last_row.get('values', [])) + 1
 
@@ -93,7 +94,8 @@ async def process_transaction_queue():
 def get_categories():
     return category_cache
 
-# Асинхронная функция для отправки сообщений в Telegram
+client_session = aiohttp.ClientSession()
+
 async def send_telegram_message(chat_id, text):
     url = f"https://api.telegram.org/bot{app.config['TELEGRAM_BOT_TOKEN']}/sendMessage"
     mini_app_url = f"https://95.182.98.91.nip.io/form?chat_id={chat_id}"
@@ -110,11 +112,10 @@ async def send_telegram_message(chat_id, text):
         'reply_markup': inline_keyboard
     }
     
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, json=payload) as response:
-            if response.status != 200:
-                logging.error(f"Failed to send message. Status code: {response.status}")
-                logging.error(f"Response: {await response.text()}")
+    async with client_session.post(url, json=payload) as response:
+        if response.status != 200:
+            logging.error(f"Failed to send message. Status code: {response.status}")
+            logging.error(f"Response: {await response.text()}")
 
 # Асинхронная функция для добавления транзакции в очередь
 async def add_transaction_to_queue(date, category, type, amount, chat_id):
@@ -145,6 +146,9 @@ async def form():
 # Запуск фоновых задач для обновления кэша и обработки транзакций
 @app.before_serving
 async def start_background_tasks():
+    global google_sheets_service
+    # Инициализация сервиса Google Sheets один раз при запуске
+    google_sheets_service = get_google_creds()
     app.add_background_task(update_category_cache)
     app.add_background_task(process_transaction_queue)
 
